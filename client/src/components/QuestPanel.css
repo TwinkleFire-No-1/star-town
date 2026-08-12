@@ -1,0 +1,408 @@
+/* 星火小镇 — 任务面板样式（星露谷风格重设计 T6.2.4） */
+
+/* 快捷按钮 — 36x36 木质 */
+.quest-toggle-btn {
+  position: absolute;
+  left: 8px;
+  bottom: 80px;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--wood-light), var(--wood-base));
+  border: 2px solid var(--wood-dark);
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--honey-gold);
+  z-index: 10;
+  image-rendering: pixelated;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 4px 12px rgba(0, 0, 0, 0.5);
+  transition: all 0.15s ease-out;
+}
+
+.quest-toggle-btn:hover {
+  background: linear-gradient(135deg, var(--honey-gold), var(--wood-light));
+  border-color: var(--honey-gold);
+  box-shadow: 0 0 8px rgba(232, 169, 60, 0.5);
+}
+
+/* 徽章 — 警示红 */
+.quest-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 16px;
+  height: 16px;
+  line-height: 16px;
+  font-size: 11px;
+  text-align: center;
+  background: var(--warn-red);
+  color: var(--text-light);
+  border-radius: 8px;
+  padding: 0 4px;
+  font-family: var(--font-pixel);
+  border: 1px solid var(--wood-dark);
+}
+
+/* 面板主体 — 280px 木质面板 */
+.quest-panel {
+  position: absolute;
+  left: 8px;
+  top: 60px;
+  width: 280px;
+  max-height: calc(100% - 120px);
+  background: linear-gradient(135deg, var(--wood-light), var(--wood-base));
+  border: 3px solid var(--wood-dark);
+  border-radius: 8px;
+  font-family: var(--font-body);
+  color: var(--text-light);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  z-index: 20;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* 头部 */
+.quest-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 2px solid var(--wood-dark);
+  background: var(--wood-dark);
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+}
+
+.quest-panel-header h3 {
+  margin: 0;
+  font-size: 14px;
+  color: var(--honey-gold);
+  letter-spacing: 2px;
+  font-family: var(--font-pixel);
+  text-shadow: 1px 1px 0 var(--wood-dark);
+}
+
+.quest-panel-close {
+  background: linear-gradient(180deg, var(--wood-light), var(--wood-base));
+  border: 1px solid var(--wood-dark);
+  border-radius: 3px;
+  color: var(--warn-red);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 2px 6px;
+  transition: all 0.15s ease-out;
+}
+
+.quest-panel-close:hover {
+  background: var(--warn-red);
+  color: var(--text-light);
+}
+
+/* 标签页 — tab-wood 风格 */
+.quest-tabs {
+  display: flex;
+  border-bottom: 2px solid var(--wood-dark);
+  background: var(--wood-base);
+}
+
+.quest-tab {
+  flex: 1;
+  padding: 6px 4px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-muted);
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s ease-out;
+}
+
+.quest-tab:hover {
+  color: var(--parchment);
+}
+
+.quest-tab.active {
+  color: var(--text-dark);
+  background: linear-gradient(180deg, var(--honey-gold), var(--wood-light));
+  border-bottom-color: var(--honey-gold);
+}
+
+/* 任务列表 */
+.quest-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px;
+  min-height: 120px;
+  max-height: 200px;
+  background: var(--parchment);
+}
+
+.quest-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.quest-list::-webkit-scrollbar-thumb {
+  background: var(--wood-base);
+  border-radius: 3px;
+}
+
+.quest-loading,
+.quest-empty {
+  text-align: center;
+  padding: 20px;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-family: var(--font-body);
+}
+
+/* 任务卡片 — 羊皮纸内底 + 左侧 16x16 图标占位 */
+.quest-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 6px 8px;
+  margin: 2px 0;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 0.15s;
+  background: rgba(245, 230, 200, 0.8);
+}
+
+.quest-item-icon {
+  width: 16px;
+  height: 16px;
+  background: var(--wood-base);
+  border: 1px solid var(--wood-dark);
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.quest-item-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.quest-item:hover {
+  background: rgba(232, 169, 60, 0.15);
+}
+
+.quest-item.selected {
+  border-color: var(--honey-gold);
+  background: rgba(232, 169, 60, 0.2);
+}
+
+.quest-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quest-item-title {
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--text-dark);
+  font-family: var(--font-body);
+}
+
+.quest-item-progress {
+  font-size: 11px;
+  color: var(--grass-green);
+  font-family: var(--font-pixel);
+}
+
+.quest-type-tag {
+  font-size: 11px;
+  padding: 1px 4px;
+  border-radius: 2px;
+  background: var(--wood-base);
+  color: var(--parchment);
+}
+
+.quest-item-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.quest-status-done {
+  color: var(--grass-green);
+  font-size: 14px;
+}
+
+/* 进度条 — 木框 + 草绿前景 */
+.quest-item-bar {
+  height: 4px;
+  background: var(--wood-dark);
+  border: 1px solid var(--wood-dark);
+  border-radius: 2px;
+  margin-top: 4px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.4);
+}
+
+.quest-item-bar-fill {
+  height: 100%;
+  background: var(--grass-green);
+  border-radius: 2px;
+  transition: width 0.3s;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* 任务详情 — 羊皮纸底 */
+.quest-detail {
+  border-top: 2px solid var(--wood-dark);
+  padding: 8px;
+  background: var(--parchment);
+  color: var(--text-dark);
+}
+
+.quest-detail-title {
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+  font-family: var(--font-pixel);
+}
+
+.quest-detail-status {
+  font-size: 11px;
+  color: var(--grass-green);
+  margin-bottom: 6px;
+  font-family: var(--font-body);
+}
+
+.quest-detail-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  line-height: 1.4;
+  font-family: var(--font-body);
+}
+
+.quest-detail-reward {
+  font-size: 13px;
+  color: var(--honey-gold);
+  margin-bottom: 8px;
+  font-family: var(--font-body);
+}
+
+.quest-detail-objectives {
+  margin-bottom: 6px;
+}
+
+.quest-objective {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 0;
+  font-size: 13px;
+  color: var(--text-dark);
+  font-family: var(--font-body);
+}
+
+.quest-objective.complete {
+  color: var(--grass-green);
+  text-decoration: line-through;
+}
+
+.obj-check {
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--wood-dark);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--text-dark);
+  flex-shrink: 0;
+}
+
+.quest-objective.complete .obj-check {
+  background: var(--grass-green);
+  color: var(--text-light);
+  border-color: var(--grass-green);
+}
+
+.obj-desc {
+  flex: 1;
+}
+
+.obj-count {
+  font-family: var(--font-pixel);
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+/* 按钮 — btn-wood 风格 */
+.quest-accept-btn,
+.quest-abandon-btn {
+  width: 100%;
+  padding: 6px;
+  margin-top: 4px;
+  border: 2px solid var(--wood-dark);
+  border-radius: 4px;
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s ease-out;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.quest-accept-btn {
+  background: linear-gradient(180deg, var(--grass-green), var(--wood-base));
+  border-color: var(--grass-green);
+  color: var(--text-light);
+}
+
+.quest-accept-btn:hover {
+  background: linear-gradient(180deg, var(--honey-gold), var(--grass-green));
+  border-color: var(--honey-gold);
+}
+
+.quest-abandon-btn {
+  background: linear-gradient(180deg, var(--warn-red), var(--wood-base));
+  border-color: var(--warn-red);
+  color: var(--text-light);
+}
+
+.quest-abandon-btn:hover {
+  background: linear-gradient(180deg, var(--honey-gold), var(--warn-red));
+}
+
+/* 刷新按钮 — btn-wood */
+.quest-refresh-btn {
+  display: block;
+  width: calc(100% - 16px);
+  margin: 6px 8px 8px;
+  padding: 5px;
+  background: linear-gradient(180deg, var(--wood-light), var(--wood-base));
+  border: 2px solid var(--wood-dark);
+  border-radius: 4px;
+  color: var(--parchment);
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s ease-out;
+}
+
+.quest-refresh-btn:hover {
+  background: linear-gradient(180deg, var(--honey-gold), var(--wood-light));
+  color: var(--text-dark);
+}
+
+.quest-refresh-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

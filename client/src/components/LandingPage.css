@@ -1,0 +1,303 @@
+/* 星火小镇 — Landing Page（星露谷像素风登录页） */
+
+.landing-page {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: hidden;
+  background: linear-gradient(180deg, #1b2a4a 0%, #2c3e5c 30%, #4a6fa5 55%, #7ea6c9 72%, #5b8c3e 76%, #3f6b2d 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  image-rendering: pixelated;
+}
+
+/* ---------- 背景装饰层 ---------- */
+.landing-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 45%;
+  background-image:
+    radial-gradient(2px 2px at 12% 18%, #fff8e7 60%, transparent 62%),
+    radial-gradient(2px 2px at 28% 32%, #fff8e7 60%, transparent 62%),
+    radial-gradient(2px 2px at 43% 12%, #fff8e7 60%, transparent 62%),
+    radial-gradient(3px 3px at 57% 26%, #f5e6c8 60%, transparent 62%),
+    radial-gradient(2px 2px at 69% 14%, #fff8e7 60%, transparent 62%),
+    radial-gradient(2px 2px at 81% 30%, #fff8e7 60%, transparent 62%),
+    radial-gradient(3px 3px at 91% 16%, #f5e6c8 60%, transparent 62%),
+    radial-gradient(2px 2px at 7% 38%, #fff8e7 60%, transparent 62%),
+    radial-gradient(2px 2px at 95% 42%, #fff8e7 60%, transparent 62%);
+  animation: twinkle 4s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  from { opacity: 0.5; }
+  to { opacity: 1; }
+}
+
+.moon {
+  position: absolute;
+  top: 8%;
+  right: 14%;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #f5e6c8;
+  box-shadow: 0 0 40px 12px rgba(245, 230, 200, 0.35);
+}
+
+.moon::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: rgba(75, 111, 165, 0.55);
+}
+
+.hills {
+  position: absolute;
+  bottom: 24%;
+  left: -10%;
+  width: 120%;
+  height: 40%;
+  background: #3f6b2d;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  clip-path: polygon(0 55%, 18% 22%, 34% 55%, 52% 12%, 70% 48%, 86% 20%, 100% 50%, 100% 100%, 0 100%);
+  opacity: 0.9;
+}
+
+.ground {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 26%;
+  background: #35602a;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255, 248, 231, 0.06) 0 2px, transparent 2px 8px);
+}
+
+.trees {
+  position: absolute;
+  bottom: 12%;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background-image:
+    /* 像素松树 */
+    radial-gradient(10px 14px at 6% 72%, #2e5726 60%, transparent 62%),
+    radial-gradient(8px 10px at 12% 76%, #3f6b2d 60%, transparent 62%),
+    radial-gradient(10px 14px at 88% 68%, #2e5726 60%, transparent 62%),
+    radial-gradient(9px 12px at 94% 74%, #3f6b2d 60%, transparent 62%);
+  filter: brightness(0.92);
+}
+
+/* ---------- 中央内容 ---------- */
+.landing-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  padding: 20px;
+  animation: rise-in 0.7s ease-out;
+}
+
+@keyframes rise-in {
+  from { transform: translateY(24px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ---------- 游戏 Logo ---------- */
+.game-logo {
+  text-align: center;
+}
+
+.logo-title {
+  font-family: var(--font-pixel);
+  font-size: clamp(44px, 7vw, 88px);
+  color: var(--honey-gold);
+  text-shadow:
+    0 4px 0 #6b4423,
+    0 8px 16px rgba(0, 0, 0, 0.45);
+  letter-spacing: 4px;
+}
+
+.logo-accent {
+  color: #ffd97a;
+}
+
+.logo-subtitle {
+  margin-top: 14px;
+  font-family: var(--font-pixel);
+  font-size: clamp(12px, 1.6vw, 18px);
+  color: var(--text-light);
+  letter-spacing: 3px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.logo-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+  color: var(--honey-gold);
+  font-size: 14px;
+}
+
+.divider-line {
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--honey-gold), transparent);
+}
+
+/* ---------- 认证面板（木质+羊皮纸） ---------- */
+.auth-panel {
+  width: min(420px, 88vw);
+  background: linear-gradient(180deg, var(--wood-light), var(--wood-base) 12%, #5a3a1e 88%, var(--wood-dark));
+  border: 4px solid var(--wood-dark);
+  border-radius: 10px;
+  padding: 22px 26px 20px;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 248, 231, 0.18),
+    0 14px 30px rgba(0, 0, 0, 0.4);
+}
+
+.auth-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 10px 0;
+  font-family: var(--font-pixel);
+  font-size: 13px;
+  color: var(--text-muted);
+  background: rgba(61, 40, 23, 0.55);
+  border: 2px solid var(--wood-dark);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  letter-spacing: 1px;
+}
+
+.auth-tab:hover {
+  color: var(--text-light);
+  background: rgba(61, 40, 23, 0.8);
+}
+
+.auth-tab.active {
+  color: var(--text-dark);
+  background: var(--parchment);
+  border-color: var(--honey-gold);
+  box-shadow: 0 2px 0 var(--honey-gold);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.auth-label {
+  font-family: var(--font-pixel);
+  font-size: 12px;
+  color: var(--parchment);
+  letter-spacing: 1px;
+  text-align: center;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
+}
+
+.auth-input {
+  width: 100%;
+  padding: 14px 16px;
+  font-family: var(--font-body);
+  font-size: 20px;
+  color: var(--text-dark);
+  background: var(--parchment);
+  border: 3px solid var(--wood-dark);
+  border-radius: 6px;
+  outline: none;
+  text-align: center;
+  transition: box-shadow 0.15s ease;
+}
+
+.auth-input:focus {
+  box-shadow: 0 0 0 3px rgba(232, 169, 60, 0.55);
+}
+
+.auth-error {
+  color: #ff9d9d;
+  font-size: 15px;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  background: rgba(192, 69, 69, 0.2);
+  border: 1px solid rgba(192, 69, 69, 0.4);
+  border-radius: 4px;
+  padding: 6px 8px;
+}
+
+.auth-submit {
+  margin-top: 4px;
+  padding: 14px 0;
+  font-family: var(--font-pixel);
+  font-size: 14px;
+  color: var(--text-dark);
+  background: linear-gradient(180deg, #ffd97a, var(--honey-gold) 60%, #c9891f);
+  border: 3px solid #8b5a14;
+  border-radius: 6px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 0 rgba(255, 248, 231, 0.5);
+  transition: transform 0.1s ease, filter 0.1s ease;
+}
+
+.auth-submit:hover:not(:disabled) {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.auth-submit:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.auth-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.auth-hint {
+  font-size: 14px;
+  color: #c8ab7e;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- 底部 ---------- */
+.landing-footer {
+  font-size: 14px;
+  color: rgba(255, 248, 231, 0.75);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  letter-spacing: 1px;
+}
+
+@media (max-height: 640px) {
+  .landing-content { gap: 16px; }
+  .auth-panel { padding: 14px 20px 14px; }
+}

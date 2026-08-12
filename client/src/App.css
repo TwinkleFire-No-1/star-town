@@ -1,0 +1,175 @@
+/* T5.4.4 UI打磨 + 星露谷风格重设计（现代1080p高清） */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #2a1f14;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font-body);
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+.app-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.game-wrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-container canvas {
+  display: block;
+}
+
+/* UI overlay */
+.ui-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.ui-overlay > * {
+  pointer-events: auto;
+}
+
+/* 右上角用户按钮 — 只保留用户名（点击弹出退出菜单） */
+.status-bar {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  z-index: 49;
+}
+
+/* 用户名按钮 — 木质小标签 */
+.username-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  background: linear-gradient(135deg, var(--wood-light), var(--wood-base));
+  border: 2px solid var(--wood-dark);
+  border-radius: 4px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 4px 12px rgba(0, 0, 0, 0.5);
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: var(--parchment);
+  text-shadow: 1px 1px 0 var(--wood-dark);
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+.username-btn:hover {
+  filter: brightness(1.12);
+}
+
+.username-caret {
+  font-size: 9px;
+  color: var(--honey-gold);
+  line-height: 1;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #666;
+  flex-shrink: 0;
+}
+
+.status-dot.connected {
+  background: var(--grass-green);
+  box-shadow: 0 0 4px rgba(91, 140, 62, 0.6);
+}
+
+/* 用户名下拉菜单 */
+.user-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px;
+  background: linear-gradient(160deg, var(--wood-light), var(--wood-base));
+  border: 2px solid var(--wood-dark);
+  border-radius: 6px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.55);
+  font-family: var(--font-pixel);
+  z-index: 50;
+}
+
+.user-menu-name {
+  font-size: 11px;
+  color: var(--honey-gold);
+  text-align: center;
+  text-shadow: 1px 1px 0 var(--wood-dark);
+  padding: 2px 4px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+/* 退出登录按钮（下拉菜单内） */
+.logout-btn {
+  padding: 4px 8px;
+  background: linear-gradient(180deg, #b05858, var(--warn-red));
+  border: 2px solid var(--wood-dark);
+  border-radius: 4px;
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  color: var(--text-light);
+  cursor: pointer;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
+  transition: filter 0.15s ease;
+}
+
+.logout-btn:hover {
+  filter: brightness(1.15);
+}
+
+/* 场景指示器（显示当前实际场景名，如 星火小镇/低语森林/废弃矿洞） */
+.scene-indicator {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  padding: 6px 14px;
+  background: linear-gradient(135deg, var(--wood-light), var(--wood-base));
+  border: 2px solid var(--wood-dark);
+  border-radius: 4px;
+  font-family: var(--font-pixel);
+  font-size: 18px;
+  color: var(--text-muted);
+  text-shadow: 1px 1px 0 var(--wood-dark);
+  z-index: 49;
+}

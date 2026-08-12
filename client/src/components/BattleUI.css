@@ -1,0 +1,630 @@
+/* 星火小镇 — 战斗UI样式（星露谷风格重设计） */
+/* T6.2.7 木质HP条/技能栏/暂停菜单/结算面板/行动日志 */
+
+/* ============================================
+   战斗UI容器
+   ============================================ */
+
+.battle-ui {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  font-family: var(--font-pixel);
+  z-index: 10;
+}
+
+.battle-ui > * {
+  pointer-events: auto;
+}
+
+/* ============================================
+   血条 — 木质框 + 分段格子（星露谷风格）
+   ============================================ */
+
+.combatant-bar {
+  padding: 4px 8px;
+  margin: 3px 0;
+  border-radius: 4px;
+  background: linear-gradient(135deg, rgba(107, 68, 35, 0.92), rgba(61, 40, 23, 0.92));
+  border: 2px solid var(--wood-dark);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.combatant-bar.defeated {
+  opacity: 0.5;
+  filter: grayscale(0.6);
+}
+
+/* --- 标签行 --- */
+
+.bar-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 3px;
+}
+
+.bar-name {
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: var(--parchment);
+  text-shadow: 1px 1px 0 var(--wood-dark);
+}
+
+.defeated-tag {
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: var(--warn-red);
+  background: rgba(192, 69, 69, 0.25);
+  border: 1px solid var(--warn-red);
+  border-radius: 2px;
+  padding: 1px 4px;
+}
+
+/* --- HP条 — 木质框 + 分段格子 --- */
+
+.hp-bar-container {
+  position: relative;
+  height: 14px;
+  margin-bottom: 2px;
+}
+
+.hp-bar-bg {
+  width: 100%;
+  height: 100%;
+  background: var(--wood-dark);
+  border: 2px solid var(--wood-dark);
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6);
+  display: flex;
+  gap: 1px;
+  padding: 1px;
+}
+
+.hp-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.3s ease, background-color 0.3s ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  display: flex;
+  gap: 2px;
+}
+
+/* HP分段格子叠加层（通过 repeating-linear-gradient 模拟） */
+.hp-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0,
+    transparent 11px,
+    rgba(0, 0, 0, 0.25) 11px,
+    rgba(0, 0, 0, 0.25) 13px
+  );
+  pointer-events: none;
+}
+
+.hp-text {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: var(--text-light);
+  line-height: 14px;
+  text-shadow: 1px 1px 0 var(--wood-dark), -1px -1px 0 var(--wood-dark);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* --- SP条 --- */
+
+.sp-bar-container {
+  position: relative;
+  height: 10px;
+  margin-bottom: 2px;
+}
+
+.sp-bar-bg {
+  width: 100%;
+  height: 100%;
+  background: var(--wood-dark);
+  border: 2px solid var(--wood-dark);
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+  padding: 1px;
+}
+
+.sp-bar-fill {
+  height: 100%;
+  background: linear-gradient(180deg, var(--sky-blue), #3a6d8a);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.sp-text {
+  position: absolute;
+  top: 0;
+  left: 4px;
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: var(--text-light);
+  line-height: 10px;
+  text-shadow: 1px 1px 0 var(--wood-dark);
+  pointer-events: none;
+}
+
+/* --- 敌方血条区域 --- */
+
+.enemy-bars {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 42%;
+  max-width: 200px;
+}
+
+.enemy-bars .bar-name {
+  color: #f0b0b0;
+}
+
+/* --- 玩家血条区域 --- */
+
+.player-bars {
+  position: absolute;
+  bottom: 60px;
+  left: 8px;
+  width: 42%;
+  max-width: 200px;
+}
+
+.player-bars .bar-name {
+  color: #b0d8a0;
+}
+
+/* ============================================
+   技能栏 — 36×36 木质技能格 + 冷却遮罩
+   ============================================ */
+
+.skill-bar {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px;
+  padding: 5px;
+  background: linear-gradient(135deg, var(--wood-base), var(--wood-dark));
+  border: 2px solid var(--wood-dark);
+  border-radius: 6px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 3px 8px rgba(0, 0, 0, 0.5);
+}
+
+.skill-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(180deg, var(--wood-light), var(--wood-base));
+  border: 2px solid var(--wood-dark);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+}
+
+.skill-slot.available {
+  border-color: var(--honey-gold);
+}
+
+.skill-slot.available:hover {
+  background: linear-gradient(180deg, var(--honey-gold), var(--wood-light));
+  border-color: var(--honey-gold);
+  box-shadow: 0 0 8px rgba(232, 169, 60, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.skill-slot.unavailable {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: grayscale(0.5);
+}
+
+/* 冷却遮罩 — 从底部向上覆盖 */
+.skill-slot.unavailable::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background: rgba(0, 0, 0, 0.55);
+  pointer-events: none;
+}
+
+.skill-icon {
+  font-size: 16px;
+  filter: drop-shadow(1px 1px 0 var(--wood-dark));
+}
+
+.skill-name {
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: var(--parchment);
+  margin-top: 2px;
+  text-shadow: 1px 1px 0 var(--wood-dark);
+}
+
+.skill-cost {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: var(--sky-blue);
+  background: var(--wood-dark);
+  border: 1px solid var(--wood-dark);
+  border-radius: 2px;
+  padding: 1px 3px;
+  text-shadow: none;
+}
+
+.skill-cd {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-pixel);
+  font-size: 16px;
+  color: var(--warn-red);
+  text-shadow: 2px 2px 0 var(--wood-dark), -1px -1px 0 var(--wood-dark);
+  z-index: 2;
+}
+
+/* ============================================
+   功能按钮 — 木质按钮
+   ============================================ */
+
+.battle-actions {
+  position: absolute;
+  bottom: 30px;
+  right: 8px;
+  display: flex;
+  gap: 4px;
+}
+
+.action-btn {
+  min-width: 32px;
+  height: 32px;
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: var(--parchment);
+  background: linear-gradient(180deg, var(--wood-light), var(--wood-base));
+  border: 2px solid var(--wood-dark);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 0 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.action-btn:hover {
+  background: linear-gradient(180deg, var(--honey-gold), var(--wood-light));
+  border-color: var(--honey-gold);
+  box-shadow: 0 0 6px rgba(232, 169, 60, 0.5);
+  color: var(--text-dark);
+}
+
+.action-btn:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.pause-btn {
+  font-size: 16px;
+  min-width: 32px;
+  padding: 0;
+}
+
+.flee-btn {
+  font-size: 11px;
+  padding: 0 8px;
+}
+
+.item-btn {
+  font-size: 11px;
+  padding: 0 8px;
+}
+
+/* ============================================
+   暂停菜单 — 木质覆盖层
+   ============================================ */
+
+.pause-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(26, 16, 8, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.pause-menu {
+  background: linear-gradient(135deg, var(--wood-light), var(--wood-base));
+  border: 3px solid var(--wood-dark);
+  border-radius: 8px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 160px;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.3),
+    0 6px 16px rgba(0, 0, 0, 0.6);
+}
+
+.pause-title {
+  font-family: var(--font-pixel);
+  font-size: 13px;
+  color: var(--honey-gold);
+  text-align: center;
+  margin: 0 0 6px 0;
+  text-shadow: 2px 2px 0 var(--wood-dark);
+}
+
+.pause-btn {
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: var(--parchment);
+  background: linear-gradient(180deg, var(--wood-base), var(--wood-dark));
+  border: 2px solid var(--wood-dark);
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: center;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.pause-btn:hover {
+  background: linear-gradient(180deg, var(--honey-gold), var(--wood-light));
+  border-color: var(--honey-gold);
+  color: var(--text-dark);
+  box-shadow: 0 0 8px rgba(232, 169, 60, 0.5);
+}
+
+.pause-btn:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.pause-btn.flee {
+  color: #f0b0b0;
+}
+
+.pause-btn.flee:hover {
+  color: var(--warn-red);
+}
+
+/* ============================================
+   战斗结算面板 — 木质面板 + 羊皮纸内底
+   ============================================ */
+
+.settlement-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(26, 16, 8, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 30;
+  animation: fadeIn 0.3s ease;
+}
+
+.settlement-panel {
+  background: linear-gradient(135deg, var(--wood-light), var(--wood-base));
+  border: 3px solid var(--wood-dark);
+  border-radius: 8px;
+  padding: 20px 24px;
+  min-width: 220px;
+  max-width: 300px;
+  text-align: center;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.3),
+    0 8px 24px rgba(0, 0, 0, 0.7);
+}
+
+.settlement-panel.victory {
+  border-color: var(--honey-gold);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.15),
+    0 0 20px rgba(232, 169, 60, 0.4),
+    0 8px 24px rgba(0, 0, 0, 0.7);
+}
+
+.settlement-panel.defeat {
+  border-color: var(--warn-red);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.15),
+    0 0 20px rgba(192, 69, 69, 0.3),
+    0 8px 24px rgba(0, 0, 0, 0.7);
+}
+
+.settlement-title {
+  font-family: var(--font-pixel);
+  font-size: 16px;
+  margin: 0 0 14px 0;
+  text-shadow: 2px 2px 0 var(--wood-dark);
+}
+
+.settlement-panel.victory .settlement-title {
+  color: var(--honey-gold);
+}
+
+.settlement-panel.defeat .settlement-title {
+  color: var(--warn-red);
+}
+
+.settlement-rewards {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+  background: var(--parchment);
+  border: 2px solid var(--wood-dark);
+  border-radius: 4px;
+  padding: 10px 12px;
+  color: var(--text-dark);
+}
+
+.reward-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text-dark);
+}
+
+.reward-label {
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+
+/* 经验值 — 经验紫 */
+.reward-value.exp {
+  color: var(--exp-purple);
+  font-family: var(--font-pixel);
+  font-size: 13px;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* 星币 — 蜂蜜金 */
+.reward-value.coins {
+  color: var(--honey-gold);
+  font-family: var(--font-pixel);
+  font-size: 13px;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.reward-items {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  padding: 6px 0;
+  border-top: 1px solid var(--wood-base);
+  border-bottom: 1px solid var(--wood-base);
+}
+
+.reward-item {
+  color: var(--sky-blue);
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+
+.settlement-defeat-info {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text-dark);
+  margin-bottom: 14px;
+  background: var(--parchment);
+  border: 2px solid var(--wood-dark);
+  border-radius: 4px;
+  padding: 10px 12px;
+}
+
+.defeat-hint {
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.settlement-exit-btn {
+  font-family: var(--font-pixel);
+  font-size: 12px;
+  color: var(--parchment);
+  background: linear-gradient(180deg, var(--wood-light), var(--wood-base));
+  border: 2px solid var(--wood-dark);
+  border-radius: 5px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.settlement-exit-btn:hover {
+  background: linear-gradient(180deg, var(--honey-gold), var(--wood-light));
+  border-color: var(--honey-gold);
+  color: var(--text-dark);
+  box-shadow: 0 0 10px rgba(232, 169, 60, 0.5);
+}
+
+.settlement-exit-btn:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================
+   行动日志 — 半透明羊皮纸底 + 淡入淡出
+   ============================================ */
+
+.action-log {
+  position: absolute;
+  bottom: 4px;
+  left: 8px;
+  width: 42%;
+  max-width: 200px;
+  background: rgba(245, 230, 200, 0.7);
+  border: 2px solid var(--wood-dark);
+  border-radius: 4px;
+  padding: 4px 8px;
+  pointer-events: none;
+}
+
+.log-entry {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-dark);
+  padding: 1px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: opacity 0.3s ease;
+}

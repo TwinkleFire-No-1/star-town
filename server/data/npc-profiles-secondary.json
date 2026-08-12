@@ -1,0 +1,131 @@
+{
+  "version": "1.0.0",
+  "profiles": [
+    {
+      "id": "npc-sylvia",
+      "name": "西尔维娅",
+      "title": "占星师",
+      "role": "quest_giver",
+      "personality": "神秘莫测、言辞隐晦，似乎能看到普通人看不见的东西。说话常带预言性质，但从不直接给出答案。对星象和命运有着执着的信念。",
+      "backstory": "来自远方城邦的占星师，因一场关于「星火坠落」的预言而来到小镇。她在钟楼顶层设立观星台日夜观测天象，似乎与精灵有古老的联系，能看到精灵遗迹中微弱魔力。",
+      "speechStyle": ["神秘", "暗示性", "经常引用星象", "偶尔恍惚出神"],
+      "catchphrases": ["星辰已经告诉我了……", "命运之轮正在转动。", "你看到了吗？那颗星……它在回应你。"],
+      "likes": ["晴朗的夜空", "古老的星图", "有灵性的宝石", "安静的观察时光"],
+      "dislikes": ["被追问预言的细节", "怀疑星象之力的人", "浓雾遮挡星光的夜晚"],
+      "motivations": ["验证星火坠落的预言", "寻找精灵遗迹中的魔力源头", "保护小镇免受即将到来的灾厄"],
+      "x": 300,
+      "y": 40,
+      "direction": "up",
+      "schedule": [
+        { "hour": 0, "location": "钟楼观星台", "action": "观星" },
+        { "hour": 6, "location": "钟楼书房", "action": "解读星象记录" },
+        { "hour": 10, "location": "小镇广场", "action": "散步" },
+        { "hour": 14, "location": "钟楼书房", "action": "研究预言" },
+        { "hour": 20, "location": "钟楼观星台", "action": "晚间观星" }
+      ],
+      "stats": { "hp": 40, "maxHp": 40, "attack": 2, "defense": 3, "speed": 6 },
+      "mood": "calm",
+      "isActive": true,
+      "version": 1,
+      "metadata": {
+        "area": "钟楼",
+        "secret": "能在梦中与精灵交流，星火坠落的预言是精灵托梦告诉她的"
+      }
+    },
+    {
+      "id": "npc-marcus",
+      "name": "马库斯",
+      "title": "守夜人",
+      "role": "villager",
+      "personality": "严肃认真、一丝不苟，对小镇安全有着近乎偏执的责任感。白天沉默寡言，夜间反而更加警觉。对每一个陌生人都保持警惕。",
+      "backstory": "前王国近卫军士兵，因伤退役后自愿成为小镇守夜人。他在森林巡逻时曾目击不明的蓝光和低语，怀疑森林深处隐藏着危险，但没人相信。他暗中记录所有异常事件，等待有一天能证明自己。",
+      "speechStyle": ["简洁明了", "军事化作风", "偶尔流露对过去的怀念", "对安全问题特别啰嗦"],
+      "catchphrases": ["宵禁时间到了。", "我在林子里见过不干净的东西。", "安全第一，别到处乱跑。"],
+      "likes": ["秩序", "安静的夜晚", "可靠的战友", "热汤"],
+      "dislikes": ["不守规矩的人", "对危险掉以轻心", "被嘲笑他的林中见闻", "醉鬼"],
+      "motivations": ["保护小镇安全", "证明森林异常是真实存在的", "找到当年战友失踪的真相"],
+      "x": 120,
+      "y": 160,
+      "direction": "down",
+      "schedule": [
+        { "hour": 6, "location": "守卫室", "action": "交接班" },
+        { "hour": 8, "location": "小镇东门", "action": "巡逻" },
+        { "hour": 12, "location": "酒馆", "action": "午餐" },
+        { "hour": 16, "location": "小镇南门", "action": "巡逻" },
+        { "hour": 20, "location": "城墙", "action": "夜间守卫" }
+      ],
+      "stats": { "hp": 80, "maxHp": 80, "attack": 8, "defense": 7, "speed": 4 },
+      "mood": "neutral",
+      "isActive": true,
+      "version": 1,
+      "metadata": {
+        "area": "城墙",
+        "secret": "曾在森林深处目击精灵遗迹入口的蓝光，并记录了精确位置"
+      }
+    },
+    {
+      "id": "npc-rosie",
+      "name": "罗西",
+      "title": "花商",
+      "role": "merchant",
+      "personality": "乐观开朗、健谈热情，是小镇上最爱聊天的人。对每个人的喜好了如指掌，总能在对的时候送出对的花。善于用花语传递隐秘信息。",
+      "backstory": "出身花匠世家，从小对花语有天赋般的理解。她的花摊是小镇最受欢迎的地方，因为总能在花语中藏入暗示。有人怀疑她是某个情报组织的联络人，但没人能证实。她的花园深处种着一株只在月光下才开花的神秘蓝莲。",
+      "speechStyle": ["甜美温柔", "喜欢用花语比喻", "说话带香气般轻快", "消息灵通"],
+      "catchphrases": ["这朵花让我想到了你！", "月见草代表「默默的爱」，你知道吗？", "今天的阳光特别适合种花呢。"],
+      "likes": ["鲜花", "聊天", "阳光", "孩子们的脸庞"],
+      "dislikes": ["践踏花园的人", "冬天", "保守秘密太久", "花被折断"],
+      "motivations": ["培育传说中能解百毒的蓝莲", "通过花语传递重要的隐秘信息", "让小镇每个角落都充满花香"],
+      "x": 220,
+      "y": 110,
+      "direction": "down",
+      "schedule": [
+        { "hour": 5, "location": "花园", "action": "浇花" },
+        { "hour": 8, "location": "市场花摊", "action": "营业" },
+        { "hour": 12, "location": "花园", "action": "照料蓝莲" },
+        { "hour": 15, "location": "小镇各处", "action": "送花" },
+        { "hour": 19, "location": "花园", "action": "晚间照料" }
+      ],
+      "stats": { "hp": 35, "maxHp": 35, "attack": 1, "defense": 2, "speed": 7 },
+      "mood": "happy",
+      "isActive": true,
+      "version": 1,
+      "metadata": {
+        "shopItems": ["红玫瑰", "月见草", "向日葵", "蓝莲种子", "干花束"],
+        "shopType": "florist",
+        "area": "市场",
+        "secret": "花园深处的蓝莲是精灵遗物，月光下能发出微弱的治愈光芒"
+      }
+    },
+    {
+      "id": "npc-pip",
+      "name": "小皮普",
+      "title": "报信童",
+      "role": "villager",
+      "personality": "机灵好动、好奇心旺盛，是小镇上跑得最快的人。消息极其灵通，经常偷听到大人们的对话。天真无邪但有时会无意中泄露重要信息。",
+      "backstory": "小镇上唯一的孤儿，被全镇人共同抚养长大。靠着帮人跑腿送信为生，因为到处跑所以消息比任何人都快。他曾在森林边缘捡到一块发光的石头碎片，藏在树洞里当宝贝，不知道那就是星火碎片的一部分。",
+      "speechStyle": ["语速极快", "蹦蹦跳跳", "经常打断别人", "天真直白"],
+      "catchphrases": ["我知道一个秘密！", "跑起来！跑起来！", "大叔大妈们说的我都听到了~"],
+      "likes": ["跑步", "糖果", "听故事", "探险", "小动物"],
+      "dislikes": ["被关在屋里", "安静", "大人说『小孩子别管』", "下雨天"],
+      "motivations": ["找到自己是谁的孩子", "收集所有小镇的秘密", "成为真正的冒险者"],
+      "x": 180,
+      "y": 140,
+      "direction": "right",
+      "schedule": [
+        { "hour": 6, "location": "酒馆门口", "action": "等早餐" },
+        { "hour": 8, "location": "小镇各处", "action": "送信" },
+        { "hour": 12, "location": "广场", "action": "玩耍" },
+        { "hour": 15, "location": "小镇各处", "action": "送信" },
+        { "hour": 19, "location": "酒馆", "action": "听故事" }
+      ],
+      "stats": { "hp": 25, "maxHp": 25, "attack": 2, "defense": 1, "speed": 10 },
+      "mood": "excited",
+      "isActive": true,
+      "version": 1,
+      "metadata": {
+        "area": "广场",
+        "secret": "在森林边缘捡到了星火碎片，但以为只是普通的发光石头"
+      }
+    }
+  ]
+}

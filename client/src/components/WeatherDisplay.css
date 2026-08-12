@@ -1,0 +1,105 @@
+/* 星火小镇 — 天气显示样式（星露谷木质风格 T6.9） */
+
+/* 入场动画 */
+@keyframes weatherFadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 天气变化提醒闪烁 */
+@keyframes weatherPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+.weather-display {
+  position: absolute;
+  top: 40px;
+  right: 8px; /* 右上角用户名下方，天气变化时短暂弹出 */
+  z-index: 50;
+  pointer-events: none;
+  animation: weatherFadeIn 0.4s ease-out;
+}
+
+/* 天气切换时图标弹跳提醒 */
+.weather-display .weather-icon {
+  display: inline-block;
+  animation: weatherPop 0.5s ease-out;
+}
+
+/* 木质圆角面板 */
+.weather-display-inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px;
+  background: linear-gradient(135deg, var(--wood-light), var(--wood-base));
+  border: 2px solid var(--wood-dark);
+  border-radius: 6px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.5);
+  font-family: var(--font-pixel);
+  image-rendering: pixelated;
+  max-width: 300px;
+}
+
+/* 雨天/雷雨/雾天的边框微光 */
+.weather-display.weather-light_rain .weather-display-inner,
+.weather-display.weather-storm .weather-display-inner {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+    0 0 6px rgba(150, 168, 185, 0.35),
+    0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.weather-display.weather-snow .weather-display-inner {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 0 6px rgba(228, 238, 248, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.weather-display.weather-fog .weather-display-inner {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.35),
+    0 0 6px rgba(208, 214, 220, 0.35),
+    0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* 天气图标 */
+.weather-icon {
+  font-size: 20px;
+  line-height: 1;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.5));
+}
+
+.weather-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+}
+
+/* 天气名称 — 蜂蜜金 */
+.weather-name {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--honey-gold);
+  text-shadow: 1px 1px 0 var(--wood-dark);
+}
+
+/* 天气描述 — 羊皮纸色调 */
+.weather-desc {
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  color: var(--parchment);
+  text-shadow: 1px 1px 0 var(--wood-dark);
+  opacity: 0.85;
+  white-space: nowrap;
+}

@@ -1,0 +1,64 @@
+/* 星火小镇 — 玩家间对话面板样式（T6.17 在线玩家系统）
+ * 复用 DialogueBox 木质风格，追加玩家对话专属样式
+ */
+
+/* 遮罩比 NPC 对话更透明，让玩家看清小镇中的对方 */
+.player-chat-overlay {
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.player-chat-container {
+  max-width: 760px;
+}
+
+/* 玩家头像：金色边框标识"玩家"身份 */
+.player-chat-avatar {
+  background: #3a2a12;
+  border: 3px solid #ffd700;
+  border-radius: 8px;
+}
+
+.player-chat-avatar .avatar-letter {
+  font-size: 28px;
+}
+
+/* 玩家名字：黄色（与 NPC 区分） */
+.player-chat-name {
+  color: #ffd700;
+  text-shadow: 2px 2px 0 #3a2500;
+}
+
+.player-chat-title {
+  color: #d9b06a;
+}
+
+/* 消息区域 */
+.player-chat-messages {
+  min-height: 240px;
+  max-height: 380px;
+}
+
+.player-chat-empty {
+  text-align: center;
+  color: #c9a86a;
+  padding: 40px 0;
+  font-size: 20px;
+}
+
+/* 自己消息靠右 */
+.player-chat-row {
+  justify-content: flex-end;
+}
+
+.player-chat-row.other {
+  justify-content: flex-start;
+}
+
+.player-chat-row .message-bubble {
+  background: #4a3520;
+}
+
+.player-chat-row.own .message-bubble {
+  background: #5a4418;
+  border-color: #ffd700;
+}

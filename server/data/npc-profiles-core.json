@@ -1,0 +1,202 @@
+{
+  "version": "1.0.0",
+  "profiles": [
+    {
+      "id": "npc-margaret",
+      "name": "玛格丽特",
+      "title": "酒馆老板娘",
+      "role": "merchant",
+      "personality": "热情好客、精明干练，对镇上每个人的秘密都了如指掌。表面和善，但绝不欠任何人情。善于察言观色，能在三句话内判断一个人的来路。",
+      "backstory": "继承亡夫的酒馆，独自经营二十年。丈夫曾是远征军团的斥候，在一次任务中失踪。玛格丽特以酒馆作掩护暗中收集信息，等待丈夫归来，是小镇信息的交汇点。",
+      "speechStyle": ["热情", "精明", "带点世故的幽默", "偶尔露出一丝忧伤"],
+      "catchphrases": ["欢迎光临！今天的特酿可是好东西。", "在酒馆里，没有什么是一杯酒解决不了的。", "这间酒馆里，连墙都有耳朵。"],
+      "likes": ["好酒", "有趣的冒险者", "新鲜的消息", "安静的午后"],
+      "dislikes": ["赖账的人", "在酒馆闹事", "提起她丈夫的失踪", "虚伪的奉承"],
+      "motivations": ["经营酒馆维持生计", "收集情报寻找丈夫下落", "保护小镇的安宁"],
+      "x": 100,
+      "y": 80,
+      "direction": "down",
+      "schedule": [
+        { "hour": 6, "location": "酒馆厨房", "action": "准备早餐" },
+        { "hour": 8, "location": "酒馆大厅", "action": "营业" },
+        { "hour": 12, "location": "酒馆大厅", "action": "午餐高峰" },
+        { "hour": 18, "location": "酒馆大厅", "action": "晚间营业" },
+        { "hour": 22, "location": "酒馆后院", "action": "打烊休息" }
+      ],
+      "stats": { "hp": 60, "maxHp": 60, "attack": 4, "defense": 2, "speed": 5 },
+      "mood": "neutral",
+      "isActive": true,
+      "version": 1,
+      "metadata": {
+        "shopItems": ["啤酒", "葡萄酒", "特酿", "烤肉", "面包"],
+        "shopType": "tavern",
+        "area": "酒馆"
+      }
+    },
+    {
+      "id": "npc-bark",
+      "name": "老巴克",
+      "title": "铁匠",
+      "role": "merchant",
+      "personality": "沉默寡言但技艺精湛，脾气暴躁却对学徒极有耐心。手臂上有古老的符文疤痕，那是远征军团时期留下的印记。对矿石近乎偏执。",
+      "backstory": "曾是远征军团的武器师，参与过精灵遗迹的第一次探索，手臂的疤痕就是触碰符文矿石时留下的。退役后隐居小镇，知道精灵遗迹的秘密入口，但从不轻易提起。铁匠铺地下室藏着他带回的矿石样本。",
+      "speechStyle": ["简短有力", "偶尔爆粗口", "说到矿石就滔滔不绝", "对年轻人像严厉的长辈"],
+      "catchphrases": ["铁不骗人，好就是好。", "年轻人，锤子要握紧，心要沉下来。", "这块矿石……不，没什么。"],
+      "likes": ["好矿石", "安静的锻造时光", "有天赋的学徒", "烈酒"],
+      "dislikes": ["粗制滥造的武器", "不懂装懂的人", "提及远征军团的往事", "偷窥他地下室的人"],
+      "motivations": ["打造传奇武器", "守护遗迹入口的秘密", "寻找能继承手艺的学徒"],
+      "x": 200,
+      "y": 60,
+      "direction": "down",
+      "schedule": [
+        { "hour": 7, "location": "铁匠铺", "action": "生火开炉" },
+        { "hour": 9, "location": "铁匠铺", "action": "锻造" },
+        { "hour": 13, "location": "铁匠铺", "action": "午后锻打" },
+        { "hour": 17, "location": "酒馆", "action": "喝一杯" },
+        { "hour": 20, "location": "家", "action": "休息" }
+      ],
+      "stats": { "hp": 120, "maxHp": 120, "attack": 15, "defense": 12, "speed": 6 },
+      "mood": "calm",
+      "isActive": true,
+      "version": 1,
+      "metadata": {
+        "shopItems": ["木剑", "铁剑", "皮甲", "铁甲"],
+        "shopType": "blacksmith",
+        "area": "铁匠铺",
+        "secret": "knows_relic_entrance"
+      }
+    },
+    {
+      "id": "npc-ayla",
+      "name": "艾拉",
+      "title": "草药师",
+      "role": "quest_giver",
+      "personality": "温柔但神秘，说话常带隐晦的比喻。与森林中的精灵有某种联系，能在风中听到植物的「低语」。对自然怀有深深的敬畏。",
+      "backstory": "森林边缘长大的孤儿，被前任草药师收养。她能听到植物的「低语」，是精灵血脉的微弱觉醒，暗中与森林精灵交流。她知道星火的真正来历——那是封印暗影之神的力量碎片，正在等待一个值得信赖的冒险者帮她守护森林的平衡。",
+      "speechStyle": ["轻声细语", "善用比喻", "常提及自然和风", "偶尔说出让人困惑的预言般的话"],
+      "catchphrases": ["风告诉我，今天有客人会来。", "这株草比你知道的要多。", "森林记得一切，而我倾听。"],
+      "likes": ["安静的森林", "稀有草药", "尊重自然的人", "月夜"],
+      "dislikes": ["破坏森林的行为", "过度伐木", "不尊重生命的人", "被追问精灵的事"],
+      "motivations": ["守护森林平衡", "寻找星火碎片", "培养接班人"],
+      "x": 260,
+      "y": 100,
+      "direction": "down",
+      "schedule": [
+        { "hour": 5, "location": "森林", "action": "采集晨露草药" },
+        { "hour": 9, "location": "药草铺", "action": "整理药材" },
+        { "hour": 14, "location": "药草铺", "action": "配药" },
+        { "hour": 18, "location": "森林边缘", "action": "与精灵交流" },
+        { "hour": 21, "location": "家", "action": "休息" }
+      ],
+      "stats": { "hp": 70, "maxHp": 70, "attack": 6, "defense": 3, "speed": 8 },
+      "mood": "calm",
+      "isActive": true,
+      "version": 1,
+      "metadata": {
+        "shopItems": ["草药", "高级药水", "魔法精华"],
+        "shopType": "herb_shop",
+        "area": "药草铺",
+        "secret": "elf_contact",
+        "questChain": ["森林低语", "草药师的秘密"]
+      }
+    },
+    {
+      "id": "npc-anvil",
+      "name": "铁砧",
+      "title": "矿工头目",
+      "role": "villager",
+      "personality": "粗犷豪爽，爱讲笑话，是矿工们的大哥。但提到矿洞深处就变得严肃，似乎在那里见过什么不该看的东西。",
+      "backstory": "小镇矿工的头目，在矿洞最深处发现一种散发微光的异常矿石，触碰会听到低语声。他把这件事告诉了老巴克，两人达成默契不再深入，但最近矿洞深处传来的声音越来越频繁。",
+      "speechStyle": ["大嗓门", "爱用比喻讲笑话", "说到矿洞深处就压低声音", "对矿工像家人"],
+      "catchphrases": ["今天挖到的矿石，够喝十杯了！", "矿洞深处？那是另一个世界。", "嘿！想听矿洞的故事吗？不，你不想。"],
+      "likes": ["矿工兄弟", "好酒好肉", "矿洞探险（浅层）", "讲笑话"],
+      "dislikes": ["矿洞深处的低语", "偷矿的人", "在矿洞里丢下同伴", "胆小鬼"],
+      "motivations": ["保护矿工安全", "探查矿洞异变的真相", "找到星火碎石的来源"],
+      "x": 180,
+      "y": 120,
+      "direction": "down",
+      "schedule": [
+        { "hour": 6, "location": "矿洞入口", "action": "集合矿工" },
+        { "hour": 8, "location": "矿洞", "action": "采矿" },
+        { "hour": 12, "location": "矿洞休息区", "action": "午餐" },
+        { "hour": 14, "location": "矿洞", "action": "继续采矿" },
+        { "hour": 18, "location": "酒馆", "action": "与矿工喝酒" }
+      ],
+      "stats": { "hp": 100, "maxHp": 100, "attack": 12, "defense": 10, "speed": 5 },
+      "mood": "happy",
+      "isActive": true,
+      "version": 1,
+      "metadata": {
+        "area": "矿洞入口",
+        "secret": "deep_mine_whispers",
+        "companion": "可雇佣战斗队友"
+      }
+    },
+    {
+      "id": "npc-toby",
+      "name": "托比",
+      "title": "游商",
+      "role": "merchant",
+      "personality": "油嘴滑舌但讲义气，信息灵通，是小镇与外界联系的纽带。总是在寻找稀有物品，声称见过「星火」碎片但从不细说。",
+      "backstory": "走遍大陆的游商，曾在东方的废墟中见过星火碎片——那道光让他三天三夜睡不着。他来到星火小镇，是因为感觉到这里有更多碎片。与外界的商会和情报网保持联系，是小镇获取外界消息的主要渠道。",
+      "speechStyle": ["口齿伶俐", "爱吹牛但七八分真", "做生意时精明", "私下聊天时真诚"],
+      "catchphrases": ["我走过的地方，比你吃过的饭还多。", "这可是从东方带来的宝贝！", "消息？我的消息比你的影子还快。"],
+      "likes": ["稀有物品", "好交易", "冒险故事", "甜食"],
+      "dislikes": ["被砍价", "假冒伪劣", "被困在一个地方太久", "言而无信"],
+      "motivations": ["收集星火碎片的线索", "维持商路的畅通", "找到传说中的宝藏"],
+      "x": 140,
+      "y": 140,
+      "direction": "down",
+      "schedule": [
+        { "hour": 7, "location": "集市", "action": "摆摊" },
+        { "hour": 10, "location": "小镇各处", "action": "走动叫卖" },
+        { "hour": 13, "location": "酒馆", "action": "午餐兼收集情报" },
+        { "hour": 15, "location": "集市", "action": "继续摆摊" },
+        { "hour": 19, "location": "酒馆", "action": "交易与闲聊" }
+      ],
+      "stats": { "hp": 50, "maxHp": 50, "attack": 5, "defense": 3, "speed": 9 },
+      "mood": "excited",
+      "isActive": true,
+      "version": 1,
+      "metadata": {
+        "shopItems": ["精灵石", "稀有材料", "异域饰品", "情报"],
+        "shopType": "traveling_merchant",
+        "area": "集市",
+        "secret": "seen_starfire_shard"
+      }
+    },
+    {
+      "id": "npc-lily",
+      "name": "莉莉",
+      "title": "面包师",
+      "role": "villager",
+      "personality": "天真活泼，总是笑嘻嘻的，是小镇的「阳光」。但偶尔会说出让人意外的话——她知道的事情比表现出来的多得多。暗地里是小镇「八卦网络」的核心节点。",
+      "backstory": "小镇面包师，每天凌晨4点起来烤面包。表面天真烂漫，实则是小镇「八卦网络」的核心——每个来买面包的人都会聊上几句，消息自然汇聚到她这里。她和玛格丽特是好友，两人构成小镇的信息网络，并把小皮普当作弟弟默默照顾。",
+      "speechStyle": ["活泼开朗", "爱用感叹号", "常提到烘焙的比喻", "偶尔一语惊人"],
+      "catchphrases": ["来尝尝刚出炉的面包！", "嗯？你不知道吗？人人都知道呢。", "生活就像揉面团，越揉越有韧性！"],
+      "likes": ["烘焙", "新鲜食材", "听人聊天", "小皮普"],
+      "dislikes": ["浪费食物", "坏消息", "有人欺负小皮普", "下雨天（面包发酵不好）"],
+      "motivations": ["烘焙出完美的面包", "保护小皮普", "维持小镇的温暖氛围"],
+      "x": 80,
+      "y": 100,
+      "direction": "down",
+      "schedule": [
+        { "hour": 4, "location": "面包房", "action": "烘焙" },
+        { "hour": 8, "location": "面包房", "action": "售卖" },
+        { "hour": 12, "location": "小镇广场", "action": "送面包兼聊天" },
+        { "hour": 15, "location": "面包房", "action": "下午烘焙" },
+        { "hour": 18, "location": "小镇广场", "action": "散步" }
+      ],
+      "stats": { "hp": 45, "maxHp": 45, "attack": 2, "defense": 2, "speed": 7 },
+      "mood": "happy",
+      "isActive": true,
+      "version": 1,
+      "metadata": {
+        "shopItems": ["面包", "蛋糕", "果酱面包"],
+        "shopType": "bakery",
+        "area": "面包房",
+        "secret": "gossip_hub"
+      }
+    }
+  ]
+}

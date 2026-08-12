@@ -1,0 +1,131 @@
+/* 星火小镇 — 时间UI样式（星露谷风格重设计 T6.2.1） */
+
+/* 入场动画 */
+@keyframes timeFadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.time-display {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 50;
+  pointer-events: none;
+  animation: timeFadeIn 0.4s ease-out;
+}
+
+/* 木质圆角面板 */
+.time-display-inner {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background: linear-gradient(135deg, var(--wood-light), var(--wood-base));
+  border: 2px solid var(--wood-dark);
+  border-radius: 6px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.5);
+  font-family: var(--font-pixel);
+  image-rendering: pixelated;
+}
+
+/* 时段色调仅影响边框微光，不改变木质基调 */
+.time-display.period-dawn .time-display-inner {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 0 6px rgba(255, 154, 86, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.time-display.period-evening .time-display-inner {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 0 6px rgba(255, 127, 80, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.time-display.period-night .time-display-inner {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+    0 0 6px rgba(112, 128, 255, 0.3),
+    0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+/* 时段图标 — 16x16 等效 */
+.time-icon {
+  font-size: 14px;
+  line-height: 1;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.5));
+}
+
+.time-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+}
+
+/* 天数 — 羊皮纸色调 */
+.time-day {
+  font-size: 11px;
+  color: var(--parchment);
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 0 var(--wood-dark);
+}
+
+/* 时钟 — 像素字体 13px */
+.time-clock {
+  font-size: 12px;
+  font-weight: normal;
+  letter-spacing: 1px;
+  color: var(--honey-gold);
+  text-shadow: 1px 1px 0 var(--wood-dark);
+  transition: color 0.5s ease;
+}
+
+/* 时段标签 */
+.time-period {
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--parchment);
+  text-shadow: 1px 1px 0 var(--wood-dark);
+  transition: color 0.5s ease;
+}
+
+/* 昼夜全局遮罩（保持不变） */
+.day-night-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  transition: background 2s ease, opacity 2s ease;
+}
+
+.day-night-overlay.dawn {
+  background: radial-gradient(ellipse at center, rgba(255, 154, 86, 0.08), rgba(255, 100, 50, 0.05));
+}
+
+.day-night-overlay.morning {
+  background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.03), transparent);
+}
+
+.day-night-overlay.afternoon {
+  background: radial-gradient(ellipse at center, rgba(135, 206, 235, 0.03), transparent);
+}
+
+.day-night-overlay.evening {
+  background: radial-gradient(ellipse at center, rgba(255, 127, 80, 0.08), rgba(255, 80, 50, 0.05));
+}
+
+.day-night-overlay.night {
+  background: radial-gradient(ellipse at center, rgba(20, 20, 60, 0.2), rgba(10, 10, 30, 0.35));
+}

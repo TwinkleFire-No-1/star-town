@@ -1,0 +1,270 @@
+// 星火小镇 — Prisma Schema
+// 6张核心表 + 关联关系 + pgvector 支持
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-arm64-openssl-3.0.x"]
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  extensions = [vector]
+}
+
+// =============================================
+// 0. pgvector 扩展迁移
+// 需要手动执行: CREATE EXTENSION IF NOT EXISTS vector;
+// =============================================
+
+// =============================================
+// 1. Player — 玩家表
+// =============================================
+model Player {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  // 外观形象（T6.17 在线玩家系统）：注册时随机分配，决定前端精灵配色
+  avatar    String   @default("avatar_01")
+  // 角色属性
+  hp        Int      @default(100)
+  maxHp     Int      @default(100)
+  sp        Int      @default(50)
+  maxSp     Int      @default(50)
+  attack    Int      @default(10)
+  defense   Int      @default(5)
+  speed     Int      @default(10)
+  // 游戏状态
+  x         Float    @default(160)
+  y         Float    @default(90)
+  direction String   @default("down")
+  starCoins Int      @default(100)
+  gameDay   Int      @default(1)
+  // 升级打怪系统（T6.8）：等级与经验
+  level     Int      @default(1)
+  exp       Int      @default(0)
+  // 元数据
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // 关联
+  inventory PlayerItem[]
+  memories  PlayerMemory[]
+  quests    PlayerQuest[]
+  relations PlayerRelation[]
+
+  @@map("players")
+}
+
+// =============================================
+// 2. NPC — NPC角色表
+// =============================================
+model NPC {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  title       String   @default("")
+  role        String   @default("villager") // villager, merchant, quest_giver, boss
+  personality String   @default("") // 人格描述
+  backstory   String   @default("") // 背景故事
+  // 位置与日程
+  x           Float    @default(0)
+  y           Float    @default(0)
+  direction   String   @default("down")
+  schedule    Json     @default("[]") // 日程JSON
+  // 角色属性（可参战NPC）
+  hp          Int      @default(80)
+  maxHp       Int      @default(80)
+  attack      Int      @default(8)
+  defense     Int      @default(4)
+  speed       Int      @default(8)
+  // 状态
+  isActive    Boolean  @default(true)
+  // 元数据
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // 关联
+  memories  NPCMemory[]
+  relationsAsSource NPCRelation[] @relation("SourceNPC")
+  relationsAsTarget NPCRelation[] @relation("TargetNPC")
+
+  @@map("npcs")
+}
+
+// =============================================
+// 3. Item — 物品表
+// =============================================
+model Item {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String   @default("")
+  category    String   @default("misc") // weapon, armor, consumable, material, quest, misc
+  // 属性
+  attack      Int      @default(0)
+  defense     Int      @default(0)
+  healHp      Int      @default(0)
+  healSp      Int      @default(0)
+  // 经济
+  buyPrice    Int      @default(0)
+  sellPrice   Int      @default(0)
+  // 是否可堆叠
+  stackable   Boolean  @default(true)
+  maxStack    Int      @default(99)
+  // 元数据
+  iconKey     String   @default("") // 精灵图key
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // 关联
+  playerItems PlayerItem[]
+
+  @@map("items")
+}
+
+// 玩家背包（多对多关联表）
+model PlayerItem {
+  id       String   @id @default(uuid())
+  playerId String
+  itemId   String
+  quantity Int      @default(1)
+  equipped Boolean  @default(false)
+
+  player   Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  item     Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@unique([playerId, itemId])
+  @@map("player_items")
+}
+
+// =============================================
+// 4. Quest — 任务表
+// =============================================
+model Quest {
+  id          String   @id @default(uuid())
+  title       String
+  description String   @default("")
+  type        String   @default("main") // main, side, daily, emergent, hidden
+  chapter     Int      @default(0) // 0=序章, 1-5=主章节
+  giverNpcId  String?  // 给予任务的NPC ID
+  // 触发与完成条件
+  triggerCond Json     @default("{}") // 触发条件
+  completeCond Json    @default("{}") // 完成条件
+  // 奖励
+  rewardExp   Int      @default(0)
+  rewardCoins Int      @default(0)
+  rewardItems Json     @default("[]") // 奖励物品列表
+  // 前置任务
+  prerequisiteId String? // 前置任务ID
+  // 是否可重复
+  repeatable  Boolean  @default(false)
+  // 元数据
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // 关联
+  playerQuests PlayerQuest[]
+
+  @@map("quests")
+}
+
+// 玩家任务进度
+model PlayerQuest {
+  id          String   @id @default(uuid())
+  playerId    String
+  questId     String
+  status      String   @default("available") // available, active, completed, failed
+  progress    Json     @default("{}") // 进度数据
+  acceptedAt  DateTime? // 接受时间
+  completedAt DateTime? // 完成时间
+  updatedAt   DateTime @updatedAt // 最后更新时间
+
+  player      Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  quest       Quest    @relation(fields: [questId], references: [id], onDelete: Cascade)
+
+  @@unique([playerId, questId])
+  @@map("player_quests")
+}
+
+// =============================================
+// 5. NPCMemory — NPC记忆表
+// =============================================
+model NPCMemory {
+  id        String   @id @default(uuid())
+  npcId     String
+  // 记忆内容
+  type      String   @default("observation") // observation, dialogue, reflection, relation
+  content   String
+  importance Int     @default(5) // 1-10
+  // 向量嵌入（pgvector 1536维）
+  embedding  Unsupported("vector(1536)")?
+  // 元数据
+  context   Json     @default("{}") // 上下文信息
+  createdAt DateTime @default(now())
+  accessedAt DateTime @default(now())
+  archived  Boolean  @default(false)
+
+  npc       NPC      @relation(fields: [npcId], references: [id], onDelete: Cascade)
+
+  @@index([npcId])
+  @@map("npc_memories")
+}
+
+// 玩家记忆（简化版，玩家对NPC的印象）
+model PlayerMemory {
+  id        String   @id @default(uuid())
+  playerId  String
+  npcId     String?
+  content   String
+  type      String   @default("general")
+  createdAt DateTime @default(now())
+
+  player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([playerId])
+  @@map("player_memories")
+}
+
+// =============================================
+// 6. NPCRelation — NPC关系表
+// =============================================
+model NPCRelation {
+  id         String   @id @default(uuid())
+  sourceNpcId String
+  targetNpcId String
+  // 关系属性
+  type       String   @default("neutral") // friend, rival, family, lover, neutral, enemy
+  affection  Int      @default(50) // 0-100 好感度
+  trust      Int      @default(50) // 0-100 信任度
+  description String  @default("")
+  // 元数据
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  sourceNpc  NPC      @relation("SourceNPC", fields: [sourceNpcId], references: [id], onDelete: Cascade)
+  targetNpc  NPC      @relation("TargetNPC", fields: [targetNpcId], references: [id], onDelete: Cascade)
+
+  @@unique([sourceNpcId, targetNpcId])
+  @@index([sourceNpcId])
+  @@index([targetNpcId])
+  @@map("npc_relations")
+}
+
+// 玩家与NPC关系
+model PlayerRelation {
+  id         String   @id @default(uuid())
+  playerId   String
+  npcId      String
+  affection  Int      @default(50) // 0-100
+  trust      Int      @default(50) // 0-100
+  reputation Int      @default(50) // 0-100 全局声望
+  description String  @default("")
+  // 元数据
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  player     Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@unique([playerId, npcId])
+  @@map("player_relations")
+}

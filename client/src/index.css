@@ -1,0 +1,54 @@
+/* 星火小镇 — 全局基础样式（星露谷风格重设计） */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* 字体 — 与 game/typography.ts 统一：标题=Press Start 2P，正文=VT323，中文回退 ZCOOL KuaiLe */
+  --font-pixel: 'Press Start 2P', 'ZCOOL KuaiLe', monospace;
+  --font-body: 'VT323', 'ZCOOL KuaiLe', monospace;
+  --font-nametag: 'ZCOOL KuaiLe', 'VT323', monospace;
+
+  /* 木质面板 */
+  --wood-dark: #3d2817;
+  --wood-base: #6b4423;
+  --wood-light: #8b6914;
+  --parchment: #f5e6c8;
+
+  /* 强调色 */
+  --honey-gold: #e8a93c;
+  --grass-green: #5b8c3e;
+  --sky-blue: #4a90b8;
+  --warn-red: #c04545;
+  --exp-purple: #9b6bb0;
+  --night-blue: #2c3e5c;
+
+  /* 文字 */
+  --text-light: #fff8e7;
+  --text-dark: #3d2817;
+  --text-muted: #8b7355;
+
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--text-light);
+  background: #2a1f14;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  image-rendering: pixelated;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
